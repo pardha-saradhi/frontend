@@ -14,7 +14,7 @@ export default function StepSummary({ data, onBack }) {
 
   const sendEmail = async () => {
     try {
-      const res = await fetch('https://backend-2-21vd.onrender.com', {
+      const res = await fetch('https://backend-2-21vd.onrender.com/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
