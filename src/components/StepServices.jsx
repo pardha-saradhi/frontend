@@ -73,7 +73,7 @@ const handleSubmit = () => {
         </div>
       )}
 
-      <div style={{ marginTop: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
         <button onClick={onBack}>⬅ Back</button>
         <button onClick={handleSubmit} disabled={selectedServices.length === 0 && !otherText}>
           Next ➡

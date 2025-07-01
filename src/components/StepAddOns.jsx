@@ -51,7 +51,7 @@ export default function StepAddOns({ onNext, onBack, data }) {
         <strong>Current Total: €{data.totalCost + addOnTotal}</strong>
       </div>
 
-      <div style={{ marginTop: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
         <button onClick={onBack}>⬅ Back</button>
         <button onClick={handleSubmit}>Next ➡</button>
       </div>
