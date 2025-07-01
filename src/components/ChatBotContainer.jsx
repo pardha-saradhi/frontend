@@ -42,6 +42,7 @@ export default function ChatBotContainer() {
   }]);
   const [userMessages, setUserMessages] = useState([]); // {text: string, atStep: number}
   const [input, setInput] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -148,23 +149,83 @@ export default function ChatBotContainer() {
     </div>
   );
 
-  return (
-    <div className="chat-window" style={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
-      <div className="chat-body" style={{ flex: 1, overflowY: 'auto' }}>
-        {chatBubbles}
-        <div ref={chatEndRef} />
+  // The chat window UI
+  const chatWindow = (
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+        width: 340,
+        maxWidth: '95vw',
+        height: 480,
+        zIndex: 1000,
+        boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)',
+        background: 'rgba(245, 249, 255, 0.98)',
+        borderRadius: 16,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        border: '1.5px solid #e3e8f0',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#2563eb', color: '#fff', padding: '0.6rem 1rem' }}>
+        <div style={{ fontWeight: 700, fontSize: 16, letterSpacing: 1 }}>HC ChatBot</div>
+        <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: 20, cursor: 'pointer' }}>&times;</button>
       </div>
-      {/* Chat input always at the bottom */}
-      <form onSubmit={handleSend} style={{ display: 'flex', gap: 4, padding: '1rem', borderTop: '1px solid #eee', background: '#fff' }}>
-        <input
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="Type your message..."
-          style={{ flex: 1, borderRadius: 6, border: '1px solid #ccc', padding: 6 }}
-        />
-        <button type="submit" style={{ borderRadius: 6, padding: '6px 12px', background: '#007bff', color: '#fff', border: 'none' }}>Send</button>
-      </form>
+      <div className="chat-window" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div className="chat-body" style={{ flex: 1, overflowY: 'auto' }}>
+          {chatBubbles}
+          <div ref={chatEndRef} />
+        </div>
+        {/* Chat input always at the bottom */}
+        <form onSubmit={handleSend} style={{ display: 'flex', gap: 4, padding: '0.8rem', borderTop: '1px solid #eee', background: '#fff' }}>
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder="Type your message..."
+            style={{ flex: 1, borderRadius: 6, border: '1px solid #ccc', padding: 6, fontSize: 15 }}
+          />
+          <button type="submit" style={{ borderRadius: 6, padding: '6px 12px', background: '#007bff', color: '#fff', border: 'none', fontSize: 15 }}>Send</button>
+        </form>
+      </div>
     </div>
+  );
+
+  // The floating widget button
+  const widgetButton = (
+    <button
+      onClick={() => setIsOpen(true)}
+      style={{
+        position: 'fixed',
+        bottom: 28,
+        right: 28,
+        zIndex: 999,
+        width: 54,
+        height: 54,
+        borderRadius: '50%',
+        background: '#2563eb',
+        color: '#fff',
+        border: 'none',
+        boxShadow: '0 4px 16px 0 rgba(37,99,235,0.18)',
+        fontSize: 24,
+        fontWeight: 700,
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      aria-label="Open ChatBot"
+    >
+      HC
+    </button>
+  );
+
+  return (
+    <>
+      {!isOpen && widgetButton}
+      {isOpen && chatWindow}
+    </>
   );
 }
